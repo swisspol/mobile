@@ -177,10 +177,10 @@ func installDarwin() error {
 	if goos != "darwin" {
 		return nil // Only build iOS compilers on OS X.
 	}
-	if err := installStd(darwinArmEnv); err != nil {
+	if err := installStd(darwinArmEnv, "-tags=ios"); err != nil {
 		return err
 	}
-	if err := installStd(darwinArm64Env); err != nil {
+	if err := installStd(darwinArm64Env, "-tags=ios"); err != nil {
 		return err
 	}
 	// TODO(crawshaw): darwin/386 for the iOS simulator?
