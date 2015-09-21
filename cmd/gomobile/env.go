@@ -181,8 +181,8 @@ func envInit() (err error) {
 		"GOARCH=amd64",
 		"CC=" + clang,
 		"CXX=" + clang,
-		"CGO_CFLAGS=" + cflags + " -mmacosx-version-min=10.7 -arch " + archClang("amd64"),
-		"CGO_LDFLAGS=" + cflags + " -mmacosx-version-min=10.7 -arch " + archClang("amd64"),
+		"CGO_CFLAGS=" + cflags + " -mmacosx-version-min=10.8 -arch " + archClang("amd64"),
+		"CGO_LDFLAGS=" + cflags + " -mmacosx-version-min=10.8 -arch " + archClang("amd64"),
 		"CGO_ENABLED=1",
 		"XCODE_SDK=macosx",
 	}
