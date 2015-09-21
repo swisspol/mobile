@@ -77,6 +77,7 @@ func runBind(cmd *command) error {
 	case "android":
 		ctx.GOOS = "android"
 	case "ios":
+	case "osx":
 		ctx.GOOS = "darwin"
 	default:
 		return fmt.Errorf(`unknown -target, %q.`, buildTarget)
@@ -86,7 +87,7 @@ func runBind(cmd *command) error {
 		return fmt.Errorf("-javapkg is supported only for android target")
 	}
 	if bindPrefix != "" && ctx.GOOS != "darwin" {
-		return fmt.Errorf("-prefix is supported only for ios target")
+		return fmt.Errorf("-prefix is supported only for ios and osx targets")
 	}
 
 	var pkg *build.Package
@@ -108,6 +109,8 @@ func runBind(cmd *command) error {
 		return goAndroidBind(pkg)
 	case "ios":
 		return goIOSBind(pkg)
+	case "osx":
+		return goOSXBind(pkg)
 	default:
 		return fmt.Errorf(`unknown -target, %q.`, buildTarget)
 	}

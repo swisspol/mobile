@@ -187,6 +187,9 @@ func installDarwin() error {
 	if err := installStd(darwinAmd64Env, "-tags=ios"); err != nil {
 		return err
 	}
+	if err := installStd(macAmd64Env); err != nil {
+		return err
+	}
 	return nil
 }
 

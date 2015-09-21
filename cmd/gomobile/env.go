@@ -23,6 +23,7 @@ var (
 	darwinArm64Env []string
 	darwin386Env   []string
 	darwinAmd64Env []string
+	macAmd64Env    []string
 
 	androidArmNM string
 	darwinArmNM  string
@@ -132,6 +133,7 @@ func envInit() (err error) {
 		"CGO_CFLAGS=" + cflags + " -miphoneos-version-min=8.0 -arch " + archClang("arm"),
 		"CGO_LDFLAGS=" + cflags + " -miphoneos-version-min=8.0 -arch " + archClang("arm"),
 		"CGO_ENABLED=1",
+		"XCODE_SDK=iphoneos",
 	}
 	darwinArmNM = "nm"
 	darwinArm64Env = []string{
@@ -142,6 +144,7 @@ func envInit() (err error) {
 		"CGO_CFLAGS=" + cflags + " -miphoneos-version-min=8.0 -arch " + archClang("arm64"),
 		"CGO_LDFLAGS=" + cflags + " -miphoneos-version-min=8.0 -arch " + archClang("arm64"),
 		"CGO_ENABLED=1",
+		"XCODE_SDK=iphoneos",
 	}
 
 	clang, cflags, err = envClang("iphonesimulator")
@@ -156,6 +159,7 @@ func envInit() (err error) {
 		"CGO_CFLAGS=" + cflags + " -mios-simulator-version-min=8.0 -arch " + archClang("386"),
 		"CGO_LDFLAGS=" + cflags + " -mios-simulator-version-min=8.0 -arch " + archClang("386"),
 		"CGO_ENABLED=1",
+		"XCODE_SDK=iphonesimulator",
 	}
 	darwinAmd64Env = []string{
 		"GOOS=darwin",
@@ -165,6 +169,22 @@ func envInit() (err error) {
 		"CGO_CFLAGS=" + cflags + " -mios-simulator-version-min=8.0 -arch " + archClang("amd64"),
 		"CGO_LDFLAGS=" + cflags + " -mios-simulator-version-min=8.0 -arch " + archClang("amd64"),
 		"CGO_ENABLED=1",
+		"XCODE_SDK=iphonesimulator",
+	}
+
+	clang, cflags, err = envClang("macosx")
+	if err != nil {
+		return err
+	}
+	macAmd64Env = []string{
+		"GOOS=darwin",
+		"GOARCH=amd64",
+		"CC=" + clang,
+		"CXX=" + clang,
+		"CGO_CFLAGS=" + cflags + " -mmacosx-version-min=10.7 -arch " + archClang("amd64"),
+		"CGO_LDFLAGS=" + cflags + " -mmacosx-version-min=10.7 -arch " + archClang("amd64"),
+		"CGO_ENABLED=1",
+		"XCODE_SDK=macosx",
 	}
 
 	return nil
@@ -253,5 +273,5 @@ func getenv(env []string, key string) string {
 }
 
 func pkgdir(env []string) string {
-	return gomobilepath + "/pkg_" + getenv(env, "GOOS") + "_" + getenv(env, "GOARCH")
+	return gomobilepath + "/pkg_" + getenv(env, "GOOS") + "_" + getenv(env, "XCODE_SDK") + "_" + getenv(env, "GOARCH")
 }
