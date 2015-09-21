@@ -162,8 +162,8 @@ func envInit() (err error) {
 		"GOARCH=amd64",
 		"CC=" + clang,
 		"CXX=" + clang,
-		"CGO_CFLAGS=" + cflags + " -mios-simulator-version-min=8.0 -arch x86_64",
-		"CGO_LDFLAGS=" + cflags + " -mios-simulator-version-min=8.0 -arch x86_64",
+		"CGO_CFLAGS=" + cflags + " -mios-simulator-version-min=8.0 -arch " + archClang("amd64"),
+		"CGO_LDFLAGS=" + cflags + " -mios-simulator-version-min=8.0 -arch " + archClang("amd64"),
 		"CGO_ENABLED=1",
 	}
 
